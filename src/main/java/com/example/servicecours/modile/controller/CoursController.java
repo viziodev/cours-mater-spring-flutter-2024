@@ -37,8 +37,6 @@ public class CoursController {
                 return new ResponseEntity<>(RestResponse.response(response,HttpStatus.OK), HttpStatus.OK);
     }
 
-
-
     @GetMapping("/status/{status}")
     public ResponseEntity<Map<Object, Object>>  getCoursesByStatus(@PathVariable CoursStatus status)  {
          List<CoursProjection>  coursList=  this.coursService.getCoursByStatus(status);
