@@ -1,4 +1,4 @@
-package com.example.servicecours.modile.mapper;
+package com.example.servicecours.mobile.mapper;
 
 import java.util.List;
 

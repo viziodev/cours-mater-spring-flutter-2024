@@ -3,7 +3,8 @@ package com.example.servicecours.services.impl;
 import com.example.servicecours.data.entity.Cours;
 import com.example.servicecours.data.enums.CoursStatus;
 import com.example.servicecours.data.repository.CoursRepository;
-import com.example.servicecours.data.repository.projection.CoursProjection;
+import com.example.servicecours.data.repository.projection.CoursAllProjection;
+import com.example.servicecours.data.repository.projection.CoursSimpleProjection;
 import com.example.servicecours.services.interfaces.ICoursService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,16 +22,16 @@ public class CoursService implements ICoursService {
     }
 
     @Override
-    public List<CoursProjection> getCoursByStatus(CoursStatus courseStatus) {
+    public List<CoursAllProjection> getCoursByStatus(CoursStatus courseStatus) {
         return this.coursRepository.findAllByStatus(courseStatus);
     }
 
     @Override
-    public Cours getCoursById(Long id) {
+    public CoursAllProjection getCoursById(Long id) {
         return this
                 .coursRepository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
+                .findCoursById(id)
+                ;
     }
 
     @Override

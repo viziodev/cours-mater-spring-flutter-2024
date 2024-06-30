@@ -1,11 +1,12 @@
-package com.example.servicecours.modile.controller;
+package com.example.servicecours.mobile.controller;
 
 import com.example.servicecours.data.entity.Cours;
 import com.example.servicecours.data.enums.CoursStatus;
-import com.example.servicecours.data.repository.projection.CoursProjection;
-import com.example.servicecours.modile.dtos.CoursDto;
-import com.example.servicecours.modile.dtos.RestResponse;
-import com.example.servicecours.modile.mapper.MapperService;
+import com.example.servicecours.data.repository.projection.CoursAllProjection;
+import com.example.servicecours.data.repository.projection.CoursSimpleProjection;
+import com.example.servicecours.mobile.dtos.CoursDto;
+import com.example.servicecours.mobile.dtos.RestResponse;
+import com.example.servicecours.mobile.mapper.MapperService;
 import com.example.servicecours.services.interfaces.ICoursService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +40,20 @@ public class CoursController {
 
     @GetMapping("/status/{status}")
     public ResponseEntity<Map<Object, Object>>  getCoursesByStatus(@PathVariable CoursStatus status)  {
-         List<CoursProjection>  coursList=  this.coursService.getCoursByStatus(status);
-         List<CoursDto> response=   MapperService.mapToListEntity(coursList,CoursDto.class);
-         return new ResponseEntity<>(RestResponse.response(response,HttpStatus.OK), HttpStatus.OK);
+         List<CoursAllProjection>  coursList=  this.coursService.getCoursByStatus(status);
+         return new ResponseEntity<>(RestResponse.response(coursList,HttpStatus.OK), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Cours getCourseById(@PathVariable Long id)  {
-        return this.coursService.getCoursById(id);
+    public ResponseEntity<Map<Object, Object>>  getCourseById(@PathVariable Long id)  {
+          CoursAllProjection cours=  this.coursService.getCoursById(id);
+           if (cours==null) {
+              return new ResponseEntity<>(RestResponse.response(null,HttpStatus.NO_CONTENT), HttpStatus.OK);
+          } else {
+            return new ResponseEntity<>(RestResponse.response(cours,HttpStatus.NO_CONTENT), HttpStatus.OK);
+          }
+       
+     
     }
 
 

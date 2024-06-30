@@ -1,4 +1,4 @@
-package com.example.servicecours.modile.dtos;
+package com.example.servicecours.mobile.dtos;
 
 import com.example.servicecours.data.enums.CoursStatus;
 
@@ -15,4 +15,7 @@ public class CoursDto implements Serializable {
     String professor;
     CoursStatus status;
     String icon;
+    private Integer totalHeure;
+    private Integer totalHeurePlanifier;
+    private Integer totalHeureRealiser;
 }

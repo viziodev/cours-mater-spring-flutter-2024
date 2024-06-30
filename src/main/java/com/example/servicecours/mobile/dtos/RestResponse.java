@@ -1,4 +1,4 @@
-package com.example.servicecours.modile.dtos;
+package com.example.servicecours.mobile.dtos;
 
 import org.springframework.http.HttpStatus;
 

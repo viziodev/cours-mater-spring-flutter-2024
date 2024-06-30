@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.stream.LongStream;
+
 
 @Component
 @Builder
@@ -30,17 +29,18 @@ public class SeanceMock implements CommandLineRunner  {
     @Transactional
     @Override
     public void run(String... args) throws Exception {
-        for (int i = 1; i <= 10; i++) {
-            Cours cours = coursRepository.findById(Long.valueOf(i)).orElse(null);
-            LocalDateTime date = LocalDateTime.of(2024, 4, 8, 5, 9);
-            LocalDateTime startTime = LocalDateTime.of(2024, 1, 4, 2, 6); // replace with the desired date and time
-            LocalDateTime endTime = LocalDateTime.of(2024, 1, 6, 5, 38); // replace with the desired date and time
+        for (int i = 20; i <= 31; i++) {
+            Cours cours = coursRepository.findById(Long.valueOf(i-19)).orElse(null);
+            LocalDate date = i%2==0? LocalDate.of(2024, 5, i ):LocalDate.now();
+            LocalTime startTime = LocalTime.of(i-10,0);
+            LocalTime endTime = LocalTime.of(i+2-10,0);
             var build = Seance.builder()
                              .date(date)
                              .startTime(startTime)
                              .endTime(endTime)
+                             
                              .cours(cours)
-                             .status(CoursStatus.STARTED)
+                             .status(i%2==0?CoursStatus.STARTED:CoursStatus.PLANNED)
                              .build();
             seanceRepository.save(build) ;
         }
